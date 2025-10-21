@@ -17,7 +17,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // 2. Adiciona o ouvinte de evento 'blur' (quando o campo perde o foco) 
     emailInput.addEventListener('blur', function() { 
         validateEmail(emailInput); 
-    }); 
+    });
+
+    emailInput.addEventListener('keypress', function() { 
+        input.setCustomValidity(''); // Remove a mensagem de erro do navegador
+    });
+
+    emailInput.addEventListener('mouseover', function() { 
+        alert('Voce passou o mouse sobre o campo email')
+    });
 
     // 3. Adiciona o ouvinte de evento 'submit' ao formulário para verificação final 
     const form = document.querySelector('form'); 

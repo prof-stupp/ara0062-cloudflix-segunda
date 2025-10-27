@@ -1,71 +1,67 @@
-// O RegEx para validar e-mails é crucial aqui. 
-// Esta é uma expressão regular comum para verificar se a string contém: 
-// 1. Caracteres no início. 
-// 2. O símbolo '@'. 
-// 3. Mais caracteres (o domínio). 
-// 4. Um ponto ('.'). 
-// 5. O final do domínio (pelo menos dois caracteres). 
+// =================================== 
+// PARTE 1: A "Chave Mágica" para o E-mail (Regex) 
+// =================================== 
+
+// 'emailRegex' é uma "receita" que o computador usa para saber se algo 
+// parece um e-mail. Ela verifica: 
+// 1. Algo no começo (o nome de usuário). 
+// 2. O símbolo @ (arroba). 
+// 3. Algo depois do @ (o domínio, como gmail). 
+// 4. Um ponto final (.). 
+// 5. Algo no final (o .com, .br, etc.). 
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
 
-// Espera o documento ser totalmente carregado 
-document.addEventListener('DOMContentLoaded', function() { 
-
-    // 1. Seleciona o campo de e-mail pelo ID 
-    const emailInput = document.getElementById('id_email'); 
-
-    // 2. Adiciona o ouvinte de evento 'blur' (quando o campo perde o foco) 
-    emailInput.addEventListener('blur', function() { 
-        validateEmail(emailInput); 
-    });
-
-    emailInput.addEventListener('keypress', function() { 
-        emailInput.setCustomValidity(''); // Remove a mensagem de erro do navegador
-    });
-
-    emailInput.addEventListener('mouseover', function() { 
-        alert('Voce passou o mouse sobre o campo email')
-    });
-
-    // 3. Adiciona o ouvinte de evento 'submit' ao formulário para verificação final 
-    const form = document.querySelector('form'); 
-
-    form.addEventListener('submit', function(event) { 
-        if (!validateEmail(emailInput)) { 
-            // Se a validação falhar, impede o envio do formulário 
-            event.preventDefault();  
-            alert('Por favor, corrija o e-mail antes de enviar o formulário.'); 
-        } 
-    }); 
-
-}); 
+// =================================== 
+// PARTE 2: A Função de Verificação 
+// =================================== 
 
 /** 
- * Função principal para validar o e-mail usando a expressão regular. 
- * @param {HTMLElement} input - O campo de input do e-mail. 
- * @returns {boolean} - Retorna true se o e-mail for válido, false caso contrário. 
+ * Objetivo: Checar se o valor no campo de e-mail é válido. 
+ * @param {HTMLElement} campo - O campo de texto do e-mail. 
+ * @returns {boolean} - 'true' se for válido, 'false' se não for. 
  */ 
 
-function validateEmail(input) { 
+function validarEmail(campo) { 
+    const email = campo.value; 
 
-    const email = input.value; 
-
-    // Testa o valor do campo com a RegEx 
+    // Usamos a "receita" (emailRegex) para testar o e-mail. 
     if (emailRegex.test(email)) { 
+        // SE VÁLIDO: 
+        campo.style.border = '1px solid green'; // Borda verde (OK!) 
+        campo.setCustomValidity('');           // Tira qualquer aviso de erro. 
 
-        // E-mail válido: remove qualquer estilo de erro 
-        input.style.border = '1px solid green'; 
-        input.setCustomValidity(''); // Remove a mensagem de erro do navegador 
         return true; 
 
     } else { 
+        // SE INVÁLIDO: 
+        campo.style.border = '2px solid red';  // Borda vermelha (ERRO!) 
 
-        // E-mail inválido: aplica um estilo de erro 
-        input.style.border = '2px solid red'; 
-        input.setCustomValidity('Por favor, insira um endereço de e-mail válido.'); 
-        input.reportValidity(); // Mostra a mensagem de erro do navegador 
+        // Prepara uma mensagem de erro e a mostra ao aluno: 
+        const mensagemErro = 'Por favor, insira um endereço de e-mail válido.'; 
+        campo.setCustomValidity(mensagemErro); 
+        //campo.reportValidity(); // Faz o navegador mostrar a caixa de erro. 
 
         return false; 
     } 
-
 } 
+
+// =================================== 
+// PARTE 3: Onde o Programa Começa a Funcionar 
+// =================================== 
+
+// Espera que a página HTML (o 'documento') esteja pronta para começar. 
+
+document.addEventListener('DOMContentLoaded', function() { 
+
+    // Acha o campo de e-mail na página pelo ID 'id_email'. 
+    const campoEmail = document.getElementById('id_email'); 
+
+    // --- Ação 1: Checagem Rápida (Saindo do Campo) --- 
+    // Sempre que o aluno sai do campo (evento 'blur'), checamos o e-mail. 
+
+    campoEmail.addEventListener('blur', function() { 
+        validarEmail(campoEmail); 
+    }); 
+
+}); 

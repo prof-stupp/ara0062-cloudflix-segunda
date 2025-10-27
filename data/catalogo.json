@@ -1,6 +1,14 @@
 [
     {
         "imagem": {
+            "src": "https://br.web.img3.acsta.net/c_310_420/img/a8/d2/a8d2aa3763c2d4350410fc92eb56e905.jpg",
+            "alt": "Cartaz do filme Formula 1"
+        },
+        "titulo": "Formula 1",
+        "genero": "Ação"
+    },
+    {
+        "imagem": {
             "src": "./img/interstellar.webp",
             "alt": "Cartaz do filme Interstellar"
         },
@@ -23,4 +31,5 @@
         "titulo": "Sociedade dos Poetas Mortos",
         "genero": "Drama"
     }
+
 ]
